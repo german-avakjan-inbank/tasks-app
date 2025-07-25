@@ -5,7 +5,10 @@ import com.internshipGoals.tasksApp.domain.entities.TaskList;
 import com.internshipGoals.tasksApp.mappers.TaskListMapper;
 import com.internshipGoals.tasksApp.services.TaskListService;
 import java.util.List;
+import java.util.UUID;
+import java.util.Optional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +40,11 @@ public class TaskListController {
         taskListMapper.fromDto(taskListDto)
     );
     return taskListMapper.toDto(createdTaskList);
+  }
+
+  @GetMapping(path = "/{task_list_id}")
+  public Optional<TaskListDto> getTaskList(@PathVariable("task_list_id") UUID taskListId) {
+    return taskListService.getTaskList(taskListId).map(taskListMapper::toDto);
   }
 
 }

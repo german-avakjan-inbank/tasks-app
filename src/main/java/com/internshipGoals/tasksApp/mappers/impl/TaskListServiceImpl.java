@@ -5,6 +5,8 @@ import com.internshipGoals.tasksApp.repositories.TaskListRepository;
 import com.internshipGoals.tasksApp.services.TaskListService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,5 +41,10 @@ public class TaskListServiceImpl implements TaskListService {
         now,
         now
     ));
+  }
+
+  @Override
+  public Optional<TaskList> getTaskList(UUID id) {
+    return taskListRepository.findById(id);
   }
 }
