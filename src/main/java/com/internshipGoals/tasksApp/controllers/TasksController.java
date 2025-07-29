@@ -3,12 +3,15 @@ package com.internshipGoals.tasksApp.controllers;
 import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 import com.internshipGoals.tasksApp.domain.dto.TaskDto;
+import com.internshipGoals.tasksApp.domain.entities.Task;
 import com.internshipGoals.tasksApp.mappers.TaskMapper;
 import com.internshipGoals.tasksApp.services.TaskService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +32,16 @@ public class TasksController {
         .stream()
         .map(taskMapper::toDto)
         .toList();
+  }
+
+  @PostMapping
+  public TaskDto createTask(
+      @PathVariable("tasl_list_id") UUID taskListId,
+      @RequestBody TaskDto taskDto) {
+    Task createdTask = taskService.createTask(
+        taskListId,
+        taskMapper.fromDto(taskDto)
+    );
+    return taskMapper.toDto(createdTask);
   }
 }
