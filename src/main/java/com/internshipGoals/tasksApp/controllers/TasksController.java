@@ -9,6 +9,7 @@ import com.internshipGoals.tasksApp.services.TaskService;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,5 +66,13 @@ public class TasksController {
         taskListId, taskId, taskMapper.fromDto(taskDto)
     );
     return taskMapper.toDto(updatedTask);
+  }
+
+  @DeleteMapping(path = "/{task_id}")
+  public void deleteTask(
+      @PathVariable("task_list_id") UUID taskListId,
+      @PathVariable("task_id") UUID taskId
+  ) {
+    taskService.deleteTask(taskListId, taskId);
   }
 }

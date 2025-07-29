@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TaskListServiceImpl implements TaskListService {
@@ -48,6 +49,7 @@ public class TaskListServiceImpl implements TaskListService {
     return taskListRepository.findById(id);
   }
 
+  @Transactional
   @Override
   public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
     if (null == taskList.getId()) {
