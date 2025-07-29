@@ -7,6 +7,7 @@ import com.internshipGoals.tasksApp.domain.entities.Task;
 import com.internshipGoals.tasksApp.mappers.TaskMapper;
 import com.internshipGoals.tasksApp.services.TaskService;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,5 +44,13 @@ public class TasksController {
         taskMapper.fromDto(taskDto)
     );
     return taskMapper.toDto(createdTask);
+  }
+
+  @GetMapping(path = "/{task_id}")
+  public Optional<TaskDto> getTask(
+      @PathVariable("task_list_id") UUID taskListId,
+      @PathVariable("task_id") UUID taskId
+  ) {
+    return taskService.getTask(taskListId, taskId).map(taskMapper::toDto);
   }
 }
